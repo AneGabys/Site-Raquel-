@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Localização e Horários – Hebrom Al Khalil</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: #000;
+            font-family: sans-serif;
+            color: #f5f5f5;
+        }
+
+        /* TOPBAR */
+        .topbar {
+            background-color: #C9922A;
+            text-align: center;
+            font-weight: bold;
+            border-radius: 20px;
+            color: #0D1117;
+            padding: 6px;
+            display: flex;
+            justify-content: center;
+            gap: 45px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* HEADER */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #111;
+            padding: 16px 32px;
+        }
+        .logo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .logo img { width: 100%; height: 100%; object-fit: cover; }
+        .especialidade { text-align: center; color: #f5f5f5; }
+        .especialidade h1 {
+            font-family: 'Bebas Neue', 'Barlow Condensed', Impact, 'Arial Narrow', sans-serif;
+            font-size: 52px;
+            font-weight: 900;
+            letter-spacing: 6px;
+            margin: 0;
+            color: #E8B84B;
+            text-transform: uppercase;
+            line-height: 1;
+        }
+        .especialidade h3 {
+            font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: #C9922A;
+            margin: 6px 0 0;
+            text-transform: uppercase;
+        }
+
+        /* NAV */
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 10px;
+            background-color: #111;
+            border-top: 2px solid #C9922A;
+        }
+        .produtos {
+            position: relative;
+            display: inline-block;
+            padding: 10px;
+        }
+        .produtos > a {
+            background-color: #222;
+            border-radius: 20px;
+            width: 100%;
+            padding: 10px;
+            text-align: center;
+            color: #f0f0f0;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .submenu {
+            display: none;
+            position: absolute;
+            background-color: #222;
+            border-radius: 8px;
+            z-index: 10;
+        }
+        .submenu a {
+            display: block;
+            padding: 10px 16px;
+            width: auto;
+            border-radius: 0;
+            background: none;
+            text-align: left;
+            color: #f0f0f0;
+            text-decoration: none;
+        }
+        .submenu a:hover { background-color: #333; }
+        .produtos:hover .submenu { display: block; }
+        nav a {
+            color: #f0f0f0;
+            text-decoration: none;
+            background-color: #222;
+            border-radius: 20px;
+            width: 180px;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a:hover { background-color: #C9922A; color: #0D1117; font-weight: bold; transition: background-color 0.3s; }
+        .produtos > a:hover { background-color: #C9922A; color: #0D1117; font-weight: bold; transition: background-color 0.3s; }
+
+        .nav-tooltip { position: relative; display: inline-block; }
+        .nav-tooltip > a {
+            color: #f0f0f0;
+            text-decoration: none;
+            background-color: #222;
+            border-radius: 20px;
+            width: 180px;
+            padding: 10px;
+            text-align: center;
+            display: inline-block;
+        }
+        .nav-tooltip > a:hover { background-color: #C9922A; color: #0D1117; font-weight: bold; transition: background-color 0.3s; }
+        .tooltip-card {
+            display: none;
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #1a1a1a;
+            border: 1px solid #C9922A;
+            border-radius: 12px;
+            padding: 20px;
+            min-width: 280px;
+            z-index: 100;
+            color: #f0f0f0;
+        }
+        .nav-tooltip:hover .tooltip-card { display: block; }
+        .tooltip-card h4 { color: #E8B84B; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; margin: 0 0 12px; }
+        .tooltip-card p { font-size: 13px; color: #bbb; line-height: 1.8; margin: 0; }
+        .tooltip-card .aviso { color: #E8B84B; font-size: 12px; margin-top: 8px; }
+        .tooltip-card a.maps-link { display: block; color: #C9922A; font-size: 13px; text-decoration: none; margin-top: 8px; }
+        .tooltip-card a.maps-link:hover { text-decoration: underline; color: #E8B84B; }
+        .horario-linha { display: flex; justify-content: space-between; font-size: 13px; padding: 6px 0; border-bottom: 1px solid #3a2e10; }
+        .horario-linha:last-of-type { border-bottom: none; }
+        .horario-linha span:last-child { font-weight: bold; color: #E8B84B; }
+        .badge {
+            display: inline-block;
+            background-color: #1a1505;
+            border: 1px solid #C9922A;
+            color: #E8B84B;
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-top: 4px;
+            margin-right: 4px;
+        }
+
+        /* BREADCRUMB */
+        .breadcrumb {
+            padding: 16px 32px;
+            font-size: 13px;
+            color: #7A6030;
+            border-bottom: 1px solid #3a2e10;
+        }
+        .breadcrumb a { color: #C9922A; text-decoration: none; }
+        .breadcrumb a:hover { color: #E8B84B; text-decoration: underline; }
+        .breadcrumb span { margin: 0 6px; }
+
+        /* CONTEÚDO PRINCIPAL */
+        .pagina-titulo {
+            padding: 48px 40px 24px;
+            border-left: 4px solid #C9922A;
+            margin: 32px 40px 0;
+        }
+        .pagina-titulo h1 {
+            font-family: 'Bebas Neue', 'Barlow Condensed', Impact, sans-serif;
+            font-size: 56px;
+            color: #E8B84B;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            line-height: 1;
+            margin: 0;
+        }
+        .pagina-titulo p {
+            font-size: 14px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #7A6030;
+            margin-top: 8px;
+        }
+
+        .conteudo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            gap: 24px;
+            padding: 32px 40px 64px;
+        }
+        @media (max-width: 900px) {
+            .conteudo-grid { grid-template-columns: 1fr; }
+            .pagina-titulo { margin: 16px 16px 0; padding: 32px 20px 16px; }
+            .pagina-titulo h1 { font-size: 36px; }
+            .conteudo-grid { padding: 16px 16px 48px; }
+            header { padding: 12px 16px; }
+            .logo { width: 80px; height: 80px; }
+            .especialidade h1 { font-size: 28px; letter-spacing: 2px; }
+        }
+
+        /* CARD HORÁRIOS */
+        .card-horarios {
+            background-color: #1a1505;
+            border: 1px solid #3a2e10;
+            border-top: 1px solid rgba(232,184,75,0.15);
+            border-radius: 4px;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            transition: border-color 0.3s;
+        }
+        .card-horarios:hover { border-color: #C9922A; box-shadow: 0 0 15px rgba(201,146,42,0.2); }
+
+        .card-titulo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+        .card-titulo-icon {
+            font-size: 28px;
+        }
+        .card-titulo h2 {
+            font-family: 'Bebas Neue', Impact, sans-serif;
+            font-size: 32px;
+            color: #E8B84B;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        .horario-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #3a2e10;
+            transition: all 0.3s;
+        }
+        .horario-item:last-of-type { border-bottom: none; margin-bottom: 0; }
+        .horario-item:hover { padding-left: 8px; border-color: #C9922A; }
+        .horario-item-label {
+            font-size: 13px;
+            color: #7A6030;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+        .horario-item-hora {
+            font-family: 'Bebas Neue', Impact, sans-serif;
+            font-size: 30px;
+            color: #f5f5f5;
+            letter-spacing: 2px;
+        }
+        .horario-item-tag {
+            font-family: 'Bebas Neue', Impact, sans-serif;
+            font-size: 18px;
+            color: rgba(249,188,81,0.35);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .horario-item-sub {
+            font-size: 12px;
+            color: #C9922A;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .aviso-agendamento {
+            margin-top: 24px;
+            background-color: rgba(201,146,42,0.08);
+            border: 1px solid #C9922A;
+            border-radius: 4px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .aviso-agendamento span { font-size: 20px; }
+        .aviso-agendamento p {
+            font-size: 12px;
+            color: #C9922A;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0;
+            font-weight: bold;
+        }
+
+        /* CARD WHATSAPP */
+        .card-whatsapp {
+            background-color: #1a1a1a;
+            border: 1px solid #3a2e10;
+            border-radius: 4px;
+            padding: 24px 32px;
+            margin-top: 24px;
+        }
+        .card-whatsapp p { font-size: 14px; color: #888; margin-bottom: 16px; }
+        .btn-whatsapp {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            background-color: #C9922A;
+            color: #0D1117;
+            font-family: 'Bebas Neue', Impact, sans-serif;
+            font-size: 22px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 16px;
+            border-radius: 4px;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        .btn-whatsapp:hover { background-color: #E8B84B; box-shadow: 0 0 15px rgba(201,146,42,0.4); }
+        .btn-whatsapp svg { width: 28px; height: 28px; }
+
+        /* CARD MAPA */
+        .card-mapa {
+            background-color: #1a1505;
+            border: 1px solid #3a2e10;
+            border-top: 1px solid rgba(232,184,75,0.15);
+            border-radius: 4px;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            transition: border-color 0.3s;
+        }
+        .card-mapa:hover { border-color: #C9922A; box-shadow: 0 0 15px rgba(201,146,42,0.2); }
+
+        .endereco-bloco { margin-bottom: 24px; }
+        .endereco-bloco h3 {
+            font-family: 'Bebas Neue', Impact, sans-serif;
+            font-size: 30px;
+            color: #f5f5f5;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0 0 4px;
+        }
+        .endereco-bloco p { font-size: 15px; color: #7A6030; letter-spacing: 1px; }
+
+        .mapa-wrap {
+            position: relative;
+            flex: 1;
+            min-height: 380px;
+            border: 1px solid #3a2e10;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .mapa-wrap iframe { width: 100%; height: 100%; min-height: 380px; display: block; border: none; filter: invert(0.9) hue-rotate(180deg); }
+
+        .mapa-overlay-bottom {
+            position: absolute;
+            bottom: 16px;
+            left: 16px;
+            right: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            pointer-events: none;
+        }
+        .mapa-coords {
+            background: rgba(26,26,26,0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid #3a2e10;
+            border-left: 4px solid #C9922A;
+            padding: 10px 14px;
+            pointer-events: auto;
+        }
+        .mapa-coords span {
+            display: block;
+            font-size: 11px;
+            color: #C9922A;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 4px;
+        }
+        .mapa-coords code { font-family: monospace; font-size: 12px; color: #f5f5f5; }
+        .btn-rotas {
+            background-color: #C9922A;
+            color: #0D1117;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 22px;
+            border-radius: 4px;
+            pointer-events: auto;
+            transition: background-color 0.3s;
+        }
+        .btn-rotas:hover { background-color: #E8B84B; }
+
+        /* FOOTER */
+        footer {
+            background-color: #111;
+            border-top: 2px solid #C9922A;
+            color: #f0f0f0;
+            padding: 28px 20px 14px;
+            text-align: center;
+        }
+        .footer-colunas {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        @media (max-width: 700px) {
+            .footer-colunas { grid-template-columns: 1fr 1fr; }
+        }
+        .footer-col h4 { color: #E8B84B; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; margin: 0 0 7px; }
+        .footer-col p, .footer-col a { color: #7A6030; font-size: 14px; line-height: 2; text-decoration: none; display: block; margin: 0; }
+        .footer-col a:hover { color: #E8B84B; }
+        .footer-bottom { border-top: 1px solid #3a2e10; padding-top: 20px; text-align: center; color: #8B6914; font-size: 12px; }
+
+        /* BOTÃO FLUTUANTE WHATSAPP */
+        .whatsapp-fab {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            z-index: 1000;
+            background-color: #25D366;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 16px rgba(37,211,102,0.4);
+            text-decoration: none;
+            transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
+        }
+        .whatsapp-fab:hover { transform: scale(1.1); background-color: #1ebe5d; box-shadow: 0 6px 24px rgba(37,211,102,0.6); }
+        .whatsapp-fab svg { width: 32px; height: 32px; fill: #fff; }
+        .whatsapp-tooltip {
+            position: absolute;
+            right: 70px;
+            top: 50%;
+            transform: translateY(-50%);
+            white-space: nowrap;
+            background-color: #1a1505;
+            border: 1px solid #C9922A;
+            color: #E8B84B;
+            font-family: 'Bebas Neue', Impact, sans-serif;
+            font-size: 13px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 6px 12px;
+            border-radius: 4px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+        .whatsapp-fab:hover .whatsapp-tooltip { opacity: 1; }
+    </style>
+</head>
+<body>
+
+    <div class="topbar">
+        <span>Contato: 📞 +55 61 8408-4340 | Seg–Sex: 7h às 18h | Sáb: 7h às 13h | <a href="https://wa.me/556184084340" target="_blank" style="color:#0D1117; font-weight:bold; text-decoration:none;">💬 Fale pelo WhatsApp</a></span>
+    </div>
+
+    <header>
+        <a href="index.html" class="logo" style="cursor:pointer; display:block;">
+            <img src="logocorreta.jpg" alt="Logo Hebrom Al Khalil" />
+        </a>
+        <div class="especialidade">
+            <h1>MECÂNICA INDUSTRIAL E AUTOMOTIVA</h1>
+            <h3>Especialista em Máquinas Industriais e Mecânica Automotiva</h3>
+        </div>
+    </header>
+
+    <nav>
+        </div>
+        <div class="nav-tooltip">
+            <a href="#">Endereço</a>
+            <div class="tooltip-card">
+                <h4>📍 Endereço</h4>
+                <p><strong>Vicente Pires — DF</strong></p>
+                <p>Rua 3C, Chácara 32A, Lote 4</p>
+                <p class="aviso">⚠️ Atendimento por agendamento.</p>
+                <a class="maps-link" href="https://maps.google.com/?q=Rua+3C,+Chácara+32A,+Lote+4,+Vicente+Pires,+DF" target="_blank">↗️ Abrir no Google Maps</a>
+            </div>
+        </div>
+        <div class="nav-tooltip">
+            <a href="#">Horário</a>
+            <div class="tooltip-card">
+                <h4>Horários</h4>
+                <div class="horario-linha"><span>Segunda a Sexta</span><span>19h às 21h</span></div>
+                <div class="horario-linha"><span>Sábado</span><span>14h às 18h</span></div>
+                <div class="horario-linha"><span>Domingo</span><span>Plantão*</span></div>
+                <div style="margin-top: 12px;">
+                    <span class="badge">📅 Agendamento obrigatório</span>
+                    <span class="badge">🔄 Plantão a cada 15 dias</span>
+                </div>
+            </div>
+        </div>
+        <a href="orcamento.html">Orçamento</a>
+    </nav>
+
+    <div class="breadcrumb">
+        <a href="index.html">Início</a>
+        <span>/</span>
+        Localização e Horários
+    </div>
+
+    <main>
+
+        <div class="pagina-titulo">
+            <h1>Hebrom Al Khalil</h1>
+            <p>Localização &amp; Horários Operacionais</p>
+        </div>
+
+        <div class="conteudo-grid">
+
+            <!-- COLUNA ESQUERDA: Horários + CTA -->
+            <div>
+                <div class="card-horarios">
+                    <div class="card-titulo">
+                        <span class="card-titulo-icon">🕐</span>
+                        <h2>Horários Operacionais</h2>
+                    </div>
+
+                    <div class="horario-item">
+                        <div>
+                            <p class="horario-item-label">Segunda a Sexta</p>
+                            <p class="horario-item-hora">19h às 21h</p>
+                        </div>
+                        <span class="horario-item-tag">Dias Úteis</span>
+                    </div>
+
+                    <div class="horario-item">
+                        <div>
+                            <p class="horario-item-label">Sábado</p>
+                            <p class="horario-item-hora">14h às 18h</p>
+                        </div>
+                        <span class="horario-item-tag">Fim de Semana</span>
+                    </div>
+
+                    <div class="horario-item">
+                        <div>
+                            <p class="horario-item-label">Domingo</p>
+                            <p class="horario-item-hora">Plantão</p>
+                            <p class="horario-item-sub">A cada 15 dias</p>
+                        </div>
+                        <span class="horario-item-tag">Especial</span>
+                    </div>
+
+                    <div class="aviso-agendamento">
+                        <span>✅</span>
+                        <p>Atendimento por Agendamento Prévio</p>
+                    </div>
+                </div>
+
+                <div class="card-whatsapp">
+                    <p>Garanta seu atendimento técnico exclusivo. Entre em contato antes de comparecer.</p>
+                    <a class="btn-whatsapp" href="https://wa.me/5561984084340" target="_blank">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                        </svg>
+                        Agendar pelo WhatsApp
+                    </a>
+                </div>
+            </div>
+
+            <!-- COLUNA DIREITA: Mapa -->
+            <div class="card-mapa">
+                <div class="card-titulo">
+                    <span class="card-titulo-icon">📍</span>
+                    <h2>Nossa Localização</h2>
+                </div>
+
+                <div class="endereco-bloco">
+                    <h3>Vicente Pires — DF</h3>
+                    <p>Rua 3C, Chácara 32A, Lote 4</p>
+                </div>
+
+                <div class="mapa-wrap">
+                    <iframe
+                        src="https://maps.google.com/maps?q=Rua%203C%2C%20Ch%C3%A1cara%2032A%2C%20Lote%204%2C%20Vicente%20Pires%20%E2%80%94%20DF&t=m&z=15&ie=UTF8&iwloc=&output=embed"
+                        allowfullscreen
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                    <div class="mapa-overlay-bottom">
+                        <div class="mapa-coords">
+                            <span>Coordenadas</span>
+                            <code>15.8206 S, 48.0161 W</code>
+                        </div>
+                        <a class="btn-rotas"
+                           href="https://www.google.com/maps/dir/?api=1&destination=Rua%203C%2C%20Ch%C3%A1cara%2032A%2C%20Lote%204%2C%20Vicente%20Pires%20%E2%80%94%20DF"
+                           target="_blank"
+                           title="Abrir rotas no Google Maps">
+                            ↗
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-colunas">
+            <div class="footer-col">
+                <h4>Contato</h4>
+                <a href="tel:+5561984084340">(61) 98408-4340</a>
+            </div>
+            <div class="footer-col">
+                <h4>Endereço</h4>
+                <p>Rua 3C, Chácara 32A, Lote 4</p>
+                <p>Vicente Pires — DF</p>
+            </div>
+            <div class="footer-col">
+                <h4>Horários</h4>
+                <p>Seg – Sex: 19h às 21h</p>
+                <p>Sábado: 14h às 18h</p>
+                <p>Domingo: Plantão*</p>
+            </div>
+            <div class="footer-col">
+                <h4>Criadores</h4>
+                <p>Ane Gabriella Teixeira Dourado</p>
+                <p>Kaegila Baliza de Jesus</p>
+                <p>Kamily Vitória Silva de Sousa</p>
+                <p>Pedro Henrique Bernardo de Castro</p>
+                <p>Raquel Cristine de Oliveira Silveira</p>
+            </div>
+        </div>
+        <div class="footer-bottom">©️ 2026 Especialista em Máquinas e Motos</div>
+    </footer>
+
+    <a class="whatsapp-fab" href="https://wa.me/556184084340" target="_blank" title="Fale pelo WhatsApp">
+        <span class="whatsapp-tooltip">Falar com Especialista</span>
+        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 0C7.163 0 0 7.163 0 16c0 2.821.736 5.469 2.023 7.772L0 32l8.468-2.001A15.93 15.93 0 0016 32c8.837 0 16-7.163 16-16S24.837 0 16 0zm0 29.333a13.27 13.27 0 01-6.771-1.848l-.486-.289-5.027 1.187 1.264-4.893-.317-.502A13.267 13.267 0 012.667 16C2.667 8.636 8.636 2.667 16 2.667S29.333 8.636 29.333 16 23.364 29.333 16 29.333zm7.307-9.973c-.4-.2-2.368-1.168-2.735-1.301-.367-.133-.634-.2-.901.2-.267.4-1.034 1.301-1.268 1.568-.233.267-.467.3-.867.1-.4-.2-1.688-.623-3.215-1.984-1.188-1.059-1.99-2.367-2.223-2.767-.233-.4-.025-.616.175-.815.18-.18.4-.467.6-.7.2-.233.267-.4.4-.667.133-.267.067-.5-.033-.7-.1-.2-.901-2.168-1.234-2.967-.325-.779-.656-.673-.901-.685l-.767-.013c-.267 0-.7.1-1.068.5-.367.4-1.4 1.368-1.4 3.335s1.434 3.868 1.634 4.135c.2.267 2.822 4.307 6.836 6.036.955.412 1.7.659 2.281.844.958.305 1.831.262 2.52.159.769-.115 2.368-.968 2.702-1.902.333-.933.333-1.734.233-1.902-.1-.167-.367-.267-.767-.467z"/>
+        </svg>
+    </a>
+
+</body>
+</html>

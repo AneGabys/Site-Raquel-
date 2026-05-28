@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Hebrom Al Khalil | Catálogo Técnico Industrial</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Barlow+Condensed:wght@700;900&amp;family=Hanken+Grotesk:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            background-color: rgb(0, 0, 0);
+            margin: 0;
+            font-family: 'Hanken Grotesk', sans-serif;
+            color: #f0f0f0;
+        }
+        .topbar {
+            background-color: #C9922A;
+            text-align: center;
+            font-weight: bold;
+            border-radius: 20px;
+            color: #0D1117;
+            padding: 6px;
+            display: flex;
+            justify-content: center;
+            gap: 45px;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #111;
+            padding: 16px 32px;
+        }
+
+        .logo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+            border: 2px solid #C9922A;
+        }
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .especialidade {
+            text-align: center;
+            color: #f5f5f5;
+        }
+        .especialidade h1 {
+            font-family: 'Bebas Neue', Impact, sans-serif;
+            font-size: 52px;
+            font-weight: 900;
+            letter-spacing: 6px;
+            margin: 0;
+            color: #E8B84B;
+            text-transform: uppercase;
+            line-height: 1;
+        }
+        .especialidade h3 {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: #C9922A;
+            margin: 6px 0 0;
+            text-transform: uppercase;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 10px;
+            background-color: #111;
+            border-top: 2px solid #C9922A;
+        }
+        nav a, .produtos > a {
+            color: #f0f0f0;
+            text-decoration: none;
+            background-color: #222;
+            border-radius: 20px;
+            width: 180px;
+            padding: 10px;
+            text-align: center;
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 1px;
+            font-size: 18px;
+            display: inline-block;
+        }
+        nav a:hover, .produtos > a:hover { 
+            background-color: #C9922A; 
+            color: #0D1117; 
+            font-weight: bold; 
+            transition: background-color 0.3s; 
+        }
+
+        .produtos {
+            position: relative;
+            display: inline-block;
+        }
+        .submenu {
+            display: none;
+            position: absolute;
+            background-color: #222;
+            border-radius: 8px;
+            z-index: 10;
+            top: 100%;
+            left: 0;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+        }
+        .submenu a {
+            display: block;
+            padding: 12px 16px;
+            width: 100%;
+            border-radius: 0;
+            background: none;
+            text-align: left;
+            color: #f0f0f0;
+            border-bottom: 1px solid #333;
+        }
+        .submenu a:last-child { border-bottom: none; }
+        .submenu a:hover { background-color: #333; color: #C9922A; }
+        .produtos:hover .submenu { display: block; }
+
+        .active-nav {
+            background-color: #C9922A !important;
+            color: #0D1117 !important;
+        }
+
+        /* Catalog specific cards styling to match "Index" feel but customized for catalog */
+        .machine-card {
+            background-color: #1a1505;
+            border: 1px solid #8B6914;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .machine-card:hover {
+            transform: translateY(-5px);
+            border-color: #C9922A;
+        }
+        .machine-image {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            border-bottom: 2px solid #C9922A;
+        }
+        .machine-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 28px;
+            color: #E8B84B;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        .machine-subtitle {
+            font-family: 'Barlow Condensed', sans-serif;
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 2px;
+            color: #C9922A;
+            margin-bottom: 16px;
+        }
+
+        footer {
+            background-color: #111;
+            border-top: 2px solid #C9922A;
+            color: #f0f0f0;
+            padding: 28px 20px 14px;
+            text-align: center;
+        }
+        .footer-colunas {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .footer-col h4 {
+            color: #E8B84B;
+            font-size: 13px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin: 0 0 7px;
+        }
+        .footer-col p, .footer-col a {
+            color: #7A6030;
+            font-size: 14px;
+            line-height: 2;
+            text-decoration: none;
+            display: block;
+            margin: 0;
+        }
+        .footer-col a:hover { color: #E8B84B; }
+        .footer-bottom {
+            border-top: 1px solid #3a2e10;
+            padding-top: 20px;
+            text-align: center;
+            color: #8B6914;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+<div class="topbar">
+<span class="contato">Contato:  📞 +55 61 8408-4340 |  Seg–Sab: 7h às 18h  |  Sáb: 7h às 13h  |  💬 Fale pelo WhatsApp</span>
+</div>
+<header>
+<div class="logo">
+<img alt="Logo Hebrom Al Kha" src="logocorreta.jpg"/>
+</div>
+<div class="especialidade">
+<h1>MECÂNICA INDUSTRIAL E AUTOMOTIVA</h1>
+<h3>Especialista em Máquinas Industriais e Mecânica Automotiva</h3>
+</div>
+</header>
+<nav>
+<a href="index.html">INÍCIO</a>
+<div class="produtos">
+<a class="active-nav" href="#">Catálogo Técnico</a>
+<div class="submenu">
+<a href="#">Máquinas Industriais</a>
+<a href="#">Mecânica Automotiva</a>
+<a href="#">Componentes</a>
+</div>
+</div>
+<a href="#">Endereço</a>
+<a href="#">Horário</a>
+<a href="#">Orçamento</a>
+</nav>
+<main class="max-w-7xl mx-auto px-8 py-16">
+<div class="mb-16 text-center">
+<h2 class="font-['Bebas_Neue'] text-5xl text-[#E8B84B] tracking-widest mb-4 uppercase">Mais de 30 Anos de Experiência em Máquinas Industriais
+
+<div class="w-24 h-1 bg-[#C9922A] mx-auto"></div>
+<p class="mt-6 text-gray-400 max-w-2xl mx-auto font-['Hanken_Grotesk'] text-lg">
+                Atuação profissional com ampla experiência na operação, preparação e acompanhamento de máquinas industriais.
+            </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Fabrima -->
+<div class="machine-card">
+<img alt="Fabrima" class="machine-image" src="https://lh3.googleusercontent.com/aida/ADBb0uhgGnAqxxf4-r0ZPBU9c6zNhQMUyRcRJcRIHNTRBTAzlWYA41_tHMYMc-gh-Za4q1UN4-JafnQV7Hcji8_eWd_J0Yv91pCls8xo7wUcd9KK4SZfTIOLnmleuuAbzEgipZvD_LMBVT7y519aXZUmxnwXItWTJjY6YxwVhovq_8eCwJMjOfpn8LdIfI4Ki69ipC0a4hOwLvlfqD6qjRbEomVEjd02XE3kqLQrGZL-h17jpEGY-_0fJNTniA"/>
+<div class="p-8">
+<h3 class="machine-title">FABRIMA</h3>
+<p class="machine-subtitle">Pacote Almofada</p>
+<p class="text-gray-400 text-sm leading-relaxed mb-6">
+                        Sistema de embalagem industrial de alta tecnologia projetado para embalagens flexíveis com vedação hermética superior.
+                    </p>
+<div class="space-y-3">
+<div class="flex items-center gap-3 text-[#E8B84B] text-xs font-bold uppercase tracking-tighter">
+<span class="material-symbols-outlined text-sm">speed</span> 120 PPM (Pacotes Por Minuto)
+                        </div>
+<div class="flex items-center gap-3 text-[#E8B84B] text-xs font-bold uppercase tracking-tighter">
+<span class="material-symbols-outlined text-sm">verified_user</span> Zero Leakage Technology
+                        </div>
+</div>
+</div>
+</div>
+<!-- ABIS Machine -->
+<div class="machine-card">
+<img alt="ABIS Machine" class="machine-image" src="https://lh3.googleusercontent.com/aida/ADBb0ujF4W6HMM_5oPsSmVnEVBT9PuZzJ69ppuhiTX_m0al1j9u1mdF-8cgEId_r8tv4UxT1YG4RBgRHgXwDz-LDpzFzM4_BoWD6eLlva2boD5bEy9IFyQg65-1JNpVDrTylqgc4MhoWbZaMAVJgjyNFqzVA-a9iPYEm1z8-1Bqkdj-fCkJmhlRDEdygOui9CpmYZ3gAIk-AyqC7kpLfKFz1bD9O3Ogpzmg_6PcUduhwmXjnlUtTP3-s9MGadEs"/>
+<div class="p-8">
+<h3 class="machine-title">ABIS MACHINE</h3>
+<p class="machine-subtitle">Máquina a Vácuo</p>
+<p class="text-gray-400 text-sm leading-relaxed mb-6">
+                        Solução de selagem a vácuo industrial de alto desempenho com sistema de controle de pulso para máxima conservação.
+                    </p>
+<div class="space-y-3">
+<div class="flex justify-between border-b border-[#3a2e10] pb-2">
+<span class="text-xs uppercase text-gray-500">Vácuo</span>
+<span class="text-xs font-bold text-[#E8B84B]">99.9% Level</span>
+</div>
+<div class="flex justify-between">
+<span class="text-xs uppercase text-gray-500">Ciclo</span>
+<span class="text-xs font-bold text-[#E8B84B]">High-Speed Pulse</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Tecnotok -->
+<div class="machine-card">
+<img alt="Tecnotok" class="machine-image" src="https://lh3.googleusercontent.com/aida/ADBb0uiBTTA23waDcyygXdSHZcre59mEIktNYqmd8ExevzwdtoVkKioWXlWcN2MZ6TCOACioSr4-vWPPwJWtN4rIl9t3UpsO6w5Tm437Ez2BNzBGkXg0SEo29i2q7UZOERuEJpuP9cuwlu3YXU6cVMHIueXdGWIj7Q_gE6JVS0fR8naDC4i9BYV3quNqQibZdrT4hR3yQjZuA0sEH9Nx1GP9NSxv5bt-0YsFJyUbsDEyFTG-qBlVFTP4TiF2sQ"/>
+<div class="p-8">
+<h3 class="machine-title">TECNOTOK</h3>
+<p class="machine-subtitle">Enfardadeira Heavy-Duty</p>
+<p class="text-gray-400 text-sm leading-relaxed mb-6">
+                        Equipamento robusto para enfardamento industrial com estrutura de aço reforçado, ideal para linhas de produção intensas.
+                    </p>
+<ul class="space-y-2">
+<li class="flex items-center gap-2 text-sm text-gray-300">
+<span class="w-1.5 h-1.5 rounded-full bg-[#C9922A]"></span> Capacidade de 800kg/carga
+                        </li>
+<li class="flex items-center gap-2 text-sm text-gray-300">
+<span class="w-1.5 h-1.5 rounded-full bg-[#C9922A]"></span> Produção de 45 fardos/h
+                        </li>
+</ul>
+</div>
+</div>
+<!-- System Pak -->
+<div class="machine-card">
+<img alt="System Pak" class="machine-image" src="https://lh3.googleusercontent.com/aida/ADBb0ujM4Y-VKURo5x0JiPNGEEOXbrPpEbxsvXDWPmvTa9hm27Pzbl2SNLkCDzCcML_4KrQ4ivANIdnR4ELHMdoYNwPaaKZAyaRo9Xx--C7AYB9Nj3okTONH-s_nkg5kV-AbTTaI_aSuQ50Hz8eeecP6Fo2GokeIB8YCSnjejMPBH7dhzFKoxnekIurUu9SX_QDPxqpf2fsJp9w8j6xFzB-zfedPb_sspVQB0WPyThjMqD0YnT-wJ4abQSaHP5M"/>
+<div class="p-8">
+<h3 class="machine-title">SYSTEM PAK</h3>
+<p class="machine-subtitle">Empacotadora de Temperos</p>
+<p class="text-gray-400 text-sm leading-relaxed mb-6">
+                        Máquina especializada em produtos granulados e em pó, fabricada integralmente em Aço Inox AISI 304L.
+                    </p>
+<div class="bg-[#111] p-4 border-l-4 border-[#C9922A]">
+<p class="text-[10px] text-[#C9922A] uppercase font-bold">Higiene Standard</p>
+<p class="text-lg font-['Bebas_Neue'] text-white">GRAU ALIMENTÍCIO</p>
+</div>
+</div>
+</div>
+<!-- Matiza -->
+<div class="machine-card">
+<img alt="Matiza" class="machine-image" src="https://lh3.googleusercontent.com/aida/ADBb0uis0_W9bp85YN6n8GEYHLmwj-Iott5788MDx4cf_baFgplUYhCS8_XnZkXgyrqVN6lz1-sUOcFpN5GbV7eY7TGeW1QqmNkEtMfRI4nTnaEaqVcAjr0R5OsZPeojw0CoE0fmVY_338XoYCkZvUFcxrXMRqMlVRITVRcz9aaKdN5ePa5rz2hro6fHxn3tO03JZmksfUwjC0wxHlweX-D_BCUvCgvjgWL0pUxD8Gy33MyNj8xRKa0DXfPplzI"/>
+<div class="p-8">
+<h3 class="machine-title">MATIZA</h3>
+<p class="machine-subtitle">Seladora Industrial</p>
+<p class="text-gray-400 text-sm leading-relaxed mb-6">
+                        Tecnologia de selagem térmica contínua para alta velocidade, garantindo integridade total em filmes plásticos complexos.
+                    </p>
+<div class="flex justify-between items-end mt-4">
+<div>
+<p class="text-[10px] text-gray-500 uppercase">Temperatura Máx.</p>
+<p class="font-['Bebas_Neue'] text-2xl text-[#E8B84B]">240°C</p>
+</div>
+<span class="material-symbols-outlined text-[#C9922A] text-4xl">thermostat</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer>
+<div class="footer-colunas">
+<div class="footer-col">
+<h4>Contato</h4>
+<a href="tel:+5561984084340">(61) 98408-4340</a>
+</div>
+<div class="footer-col">
+<h4>Endereço</h4>
+<p>Rua 3C, Chácara 32A, Lote 4</p>
+<p>Vicente Pires — DF</p>
+</div>
+<div class="footer-col">
+<h4>Horários</h4>
+<p>Seg – Sex: 19h às 21h</p>
+<p>Sábado: 14h às 18h</p>
+<p>Domingo: Plantão*</p>
+</div>
+<div class="footer-col">
+<h4>Criadores</h4>
+<p>Ane Gabriella Teixeira Dourado - 02410041165</p>
+<p>Kaegila Baliza de Jesus - 0241004133</p>
+<p>Kamily Vitória Silva de Sousa - 02410041285</p>
+<p>Pedro Henrique Bernardo de Castro - 02410041293</p>
+<p>Raquel Cristine de Oliveira Silveira - 02410041325</p>
+</div>
+</div>
+<div class="footer-bottom">
+            © 2026 Especialista em Máquinas e Motos
+        </div>
+</footer>
+</body></html>
